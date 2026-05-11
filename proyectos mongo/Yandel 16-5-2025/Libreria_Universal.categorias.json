@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a8b"
+  },
+  "nombre": "Literatura",
+  "descripcion": "Obras narrativas, poéticas y dramáticas de interés literario."
+},
+{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a8c"
+  },
+  "nombre": "Realismo mágico",
+  "descripcion": "Género que mezcla lo real con elementos mágicos o fantásticos."
+},
+{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a8d"
+  },
+  "nombre": "Ciencia ficción",
+  "descripcion": "Narraciones basadas en avances científicos y tecnológicos imaginarios."
+},
+{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a8e"
+  },
+  "nombre": "Aventura",
+  "descripcion": "Obras con acciones heroicas o emocionantes."
+},
+{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a8f"
+  },
+  "nombre": "Filosofía",
+  "descripcion": "Textos reflexivos sobre la existencia, el conocimiento y la moral."
+},
+{
+  "_id": {
+    "$oid": "68277f9d4f488aa93fc50a90"
+  },
+  "nombre": "Juvenil",
+  "descripcion": "Libros dirigidos a lectores jóvenes y adolescentes."
+}]

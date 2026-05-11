@@ -1,0 +1,150 @@
+[{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5a"
+  },
+  "nombre": "Laura",
+  "apellido": "Ramírez",
+  "email": "laura.ramirez@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555123456",
+  "carrera": "Ingeniería Informática",
+  "fecha_registro": {
+    "$date": "2024-08-15T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5b"
+  },
+  "nombre": "Carlos",
+  "apellido": "González",
+  "email": "carlos.gonzalez@universidad.edu",
+  "tipo_usuario": "docente",
+  "telefono": "555987654",
+  "carrera": "Historia",
+  "fecha_registro": {
+    "$date": "2023-03-12T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5c"
+  },
+  "nombre": "Ana",
+  "apellido": "Martínez",
+  "email": "ana.martinez@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555333222",
+  "carrera": "Medicina",
+  "fecha_registro": {
+    "$date": "2023-11-20T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5d"
+  },
+  "nombre": "Luis",
+  "apellido": "Pérez",
+  "email": "luis.perez@universidad.edu",
+  "tipo_usuario": "docente",
+  "telefono": "555666777",
+  "carrera": "Física",
+  "fecha_registro": {
+    "$date": "2022-09-10T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5e"
+  },
+  "nombre": "Sofía",
+  "apellido": "Morales",
+  "email": "sofia.morales@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555111888",
+  "carrera": "Derecho",
+  "fecha_registro": {
+    "$date": "2024-01-05T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a5f"
+  },
+  "nombre": "Diego",
+  "apellido": "López",
+  "email": "diego.lopez@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555222999",
+  "carrera": "Psicología",
+  "fecha_registro": {
+    "$date": "2024-04-15T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a60"
+  },
+  "nombre": "María",
+  "apellido": "Fernández",
+  "email": "maria.fernandez@universidad.edu",
+  "tipo_usuario": "docente",
+  "telefono": "555777444",
+  "carrera": "Literatura",
+  "fecha_registro": {
+    "$date": "2021-06-25T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a61"
+  },
+  "nombre": "Javier",
+  "apellido": "Ruiz",
+  "email": "javier.ruiz@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555333111",
+  "carrera": "Ingeniería Civil",
+  "fecha_registro": {
+    "$date": "2024-05-10T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "682772454f488aa93fc50a62"
+  },
+  "nombre": "Javier",
+  "apellido": "Sánchez",
+  "email": "javier.sanchez@universidad.edu",
+  "tipo_usuario": "docente",
+  "telefono": "555888777",
+  "carrera": "Filosofía",
+  "fecha_registro": {
+    "$date": "2023-01-10T00:00:00.000Z"
+  },
+  "estado": "activo"
+},
+{
+  "_id": {
+    "$oid": "68278a2a4f488aa93fc50aad"
+  },
+  "nombre": "Marta",
+  "apellido": "Gómez",
+  "email": "marta.gomez@universidad.edu",
+  "tipo_usuario": "estudiante",
+  "telefono": "555666333",
+  "carrera": "Literatura Latinoamericana",
+  "fecha_registro": {
+    "$date": "2025-05-16T00:00:00.000Z"
+  },
+  "estado": "activo"
+}]

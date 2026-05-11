@@ -1,0 +1,207 @@
+[{
+  "_id": {
+    "$oid": "68276f7f4f488aa93fc50a4f"
+  },
+  "titulo": "Cien años de soledad",
+  "autor": [
+    "Gabriel García Márquez"
+  ],
+  "editorial": "Sudamericana",
+  "anio_publicacion": 1967,
+  "categorias": [
+    "Literatura",
+    "Realismo mágico"
+  ],
+  "copias_disponibles": 5,
+  "isbn": "978-0307474728",
+  "ubicacion": "Estante A3",
+  "categoria": "Realismo mágico"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a51"
+  },
+  "titulo": "1984",
+  "autor": [
+    "George Orwell"
+  ],
+  "editorial": "Secker & Warburg",
+  "anio_publicacion": 1949,
+  "categorias": [
+    "Ciencia ficción",
+    "Política"
+  ],
+  "copias_disponibles": 3,
+  "isbn": "978-0451524935",
+  "ubicacion": "Estante B2",
+  "categoria": "Historia"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a52"
+  },
+  "titulo": "Don Quijote de la Mancha",
+  "autor": [
+    "Miguel de Cervantes"
+  ],
+  "editorial": "Francisco de Robles",
+  "anio_publicacion": 1605,
+  "categorias": [
+    "Clásico",
+    "Aventura"
+  ],
+  "copias_disponibles": 4,
+  "isbn": "978-8420472126",
+  "ubicacion": "Estante C1",
+  "categoria": "Literatura"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a53"
+  },
+  "titulo": "El Principito",
+  "autor": [
+    "Antoine de Saint-Exupéry"
+  ],
+  "editorial": "Reynal & Hitchcock",
+  "anio_publicacion": 1943,
+  "categorias": [
+    "Infantil",
+    "Filosofía"
+  ],
+  "copias_disponibles": 6,
+  "isbn": "978-0156012195",
+  "ubicacion": "Estante D4"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a54"
+  },
+  "titulo": "Rayuela",
+  "autor": [
+    "Julio Cortázar"
+  ],
+  "editorial": "Editorial Sudamericana",
+  "anio_publicacion": 1963,
+  "categorias": [
+    "Ficción",
+    "Experimental"
+  ],
+  "copias_disponibles": 0,
+  "isbn": "978-9500732049",
+  "ubicacion": "Estante B5"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a55"
+  },
+  "titulo": "La sombra del viento",
+  "autor": [
+    "Carlos Ruiz Zafón"
+  ],
+  "editorial": "Planeta",
+  "anio_publicacion": 2001,
+  "categorias": [
+    "Misterio",
+    "Drama"
+  ],
+  "copias_disponibles": 4,
+  "isbn": "978-8408172173",
+  "ubicacion": "Estante E2"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a56"
+  },
+  "titulo": "Fahrenheit 451",
+  "autor": [
+    "Ray Bradbury"
+  ],
+  "editorial": "Ballantine Books",
+  "anio_publicacion": 1953,
+  "categorias": [
+    "Distopía",
+    "Ciencia ficción"
+  ],
+  "copias_disponibles": 3,
+  "isbn": "978-1451673319",
+  "ubicacion": "Estante F1"
+},
+{
+  "_id": {
+    "$oid": "682771fa4f488aa93fc50a57"
+  },
+  "titulo": "Los juegos del hambre",
+  "autor": [
+    "Suzanne Collins"
+  ],
+  "editorial": "Scholastic Press",
+  "anio_publicacion": 2008,
+  "categorias": [
+    "Juvenil",
+    "Aventura"
+  ],
+  "copias_disponibles": 7,
+  "isbn": "978-0439023481",
+  "ubicacion": "Estante G3"
+},
+{
+  "_id": {
+    "$oid": "682782bf4f488aa93fc50a9c"
+  },
+  "titulo": "El olor de la guayaba",
+  "autor": [
+    "Gabriel García Márquez"
+  ],
+  "editorial": "Editorial Diana",
+  "anio_publicacion": 1993,
+  "categorias": [
+    "Ensayo",
+    "Entrevista"
+  ],
+  "copias_disponibles": 3,
+  "isbn": "978-9681308184",
+  "ubicacion": "Estante H1",
+  "idioma": "español",
+  "tipo": "ensayo"
+},
+{
+  "_id": {
+    "$oid": "682782bf4f488aa93fc50a9d"
+  },
+  "titulo": "Yo no vengo a decir un discurso",
+  "autor": [
+    "Gabriel García Márquez"
+  ],
+  "editorial": "Mondadori",
+  "anio_publicacion": 2010,
+  "categorias": [
+    "Ensayo",
+    "Discurso"
+  ],
+  "copias_disponibles": 2,
+  "isbn": "978-8439723070",
+  "ubicacion": "Estante H2",
+  "idioma": "español",
+  "tipo": "ensayo"
+},
+{
+  "_id": {
+    "$oid": "682782bf4f488aa93fc50a9e"
+  },
+  "titulo": "Textos costeños",
+  "autor": [
+    "Gabriel García Márquez"
+  ],
+  "editorial": "Instituto Caro y Cuervo",
+  "anio_publicacion": 1999,
+  "categorias": [
+    "Ensayo",
+    "Crónica"
+  ],
+  "copias_disponibles": 1,
+  "isbn": "978-9581200742",
+  "ubicacion": "Estante H3",
+  "idioma": "español",
+  "tipo": "ensayo"
+}]

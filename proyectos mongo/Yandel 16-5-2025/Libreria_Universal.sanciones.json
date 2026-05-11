@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "682777894f488aa93fc50a7c"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5b"
+  },
+  "motivo": "Retraso en devolución",
+  "fecha_inicio": {
+    "$date": "2025-05-16T00:00:00.000Z"
+  },
+  "fecha_fin": {
+    "$date": "2025-05-23T00:00:00.000Z"
+  },
+  "estado": "vigente"
+},
+{
+  "_id": {
+    "$oid": "682777894f488aa93fc50a7d"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5e"
+  },
+  "motivo": "Pérdida de libro",
+  "fecha_inicio": {
+    "$date": "2025-04-10T00:00:00.000Z"
+  },
+  "fecha_fin": {
+    "$date": "2025-05-10T00:00:00.000Z"
+  },
+  "estado": "finalizada"
+}]

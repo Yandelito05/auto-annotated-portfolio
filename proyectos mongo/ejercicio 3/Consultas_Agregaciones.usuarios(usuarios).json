@@ -1,0 +1,59 @@
+[{
+  "_id": 1,
+  "nombre": "Juan Pérez",
+  "edad": 30,
+  "activo": true,
+  "ciudad": "Madrid",
+  "intereses": [
+    "música",
+    "cocina"
+  ],
+  "telefono": "123456789"
+},
+{
+  "_id": 2,
+  "nombre": "Laura Gómez",
+  "edad": 35,
+  "activo": true,
+  "ciudad": "Heredia",
+  "intereses": [
+    "lectura",
+    "viajes"
+  ],
+  "telefono": "88889999"
+},
+{
+  "_id": 3,
+  "nombre": "Carlos Mora",
+  "edad": 28,
+  "activo": false,
+  "ciudad": "Alajuela",
+  "intereses": [
+    "fútbol",
+    "cine"
+  ],
+  "telefono": "87776666"
+},
+{
+  "_id": 4,
+  "nombre": "María López",
+  "edad": 42,
+  "activo": true,
+  "ciudad": "Cartago",
+  "intereses": [
+    "yoga",
+    "música"
+  ]
+},
+{
+  "_id": 5,
+  "nombre": "Pedro Sánchez",
+  "edad": 22,
+  "activo": true,
+  "ciudad": "San José",
+  "intereses": [
+    "programación",
+    "cocina"
+  ],
+  "telefono": "89991111"
+}]

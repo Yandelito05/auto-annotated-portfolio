@@ -1,0 +1,12 @@
+[{
+  "_id": 3,
+  "nombre": "Carlos Mora",
+  "edad": 28,
+  "activo": false,
+  "ciudad": "Alajuela",
+  "intereses": [
+    "fútbol",
+    "cine"
+  ],
+  "telefono": "87776666"
+}]

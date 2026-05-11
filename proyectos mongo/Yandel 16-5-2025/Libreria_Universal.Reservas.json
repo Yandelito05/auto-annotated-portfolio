@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "6827775e4f488aa93fc50a77"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5f"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a52"
+  },
+  "fecha_reserva": {
+    "$date": "2025-05-14T00:00:00.000Z"
+  },
+  "estado": "pendiente"
+},
+{
+  "_id": {
+    "$oid": "6827775e4f488aa93fc50a78"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a60"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a53"
+  },
+  "fecha_reserva": {
+    "$date": "2025-05-12T00:00:00.000Z"
+  },
+  "estado": "atendida"
+},
+{
+  "_id": {
+    "$oid": "6827775e4f488aa93fc50a79"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a61"
+  },
+  "libro_id": {
+    "$oid": "68276f7f4f488aa93fc50a4f"
+  },
+  "fecha_reserva": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "estado": "cancelada"
+}]

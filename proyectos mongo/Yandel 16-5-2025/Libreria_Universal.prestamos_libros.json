@@ -1,0 +1,144 @@
+[{
+  "_id": {
+    "$oid": "682777314f488aa93fc50a70"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5a"
+  },
+  "libro_id": {
+    "$oid": "68276f7f4f488aa93fc50a4f"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "estado": "devuelto"
+},
+{
+  "_id": {
+    "$oid": "682777314f488aa93fc50a71"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5b"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a51"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-10T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-17T00:00:00.000Z"
+  },
+  "estado": "no devuelto"
+},
+{
+  "_id": {
+    "$oid": "682777314f488aa93fc50a72"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5c"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a52"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-04-20T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-05T00:00:00.000Z"
+  },
+  "estado": "devuelto"
+},
+{
+  "_id": {
+    "$oid": "682777314f488aa93fc50a73"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5d"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a53"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-12T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-19T00:00:00.000Z"
+  },
+  "estado": "pendiente"
+},
+{
+  "_id": {
+    "$oid": "682777314f488aa93fc50a74"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a5e"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a56"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-04-28T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-12T00:00:00.000Z"
+  },
+  "estado": "devuelto"
+},
+{
+  "_id": {
+    "$oid": "682784e54f488aa93fc50aa4"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a62"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a51"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-05-31T00:00:00.000Z"
+  },
+  "estado": "pendiente"
+},
+{
+  "_id": {
+    "$oid": "682784e54f488aa93fc50aa5"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a62"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a52"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-02T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-06-01T00:00:00.000Z"
+  },
+  "estado": "pendiente"
+},
+{
+  "_id": {
+    "$oid": "682784e54f488aa93fc50aa6"
+  },
+  "usuario_id": {
+    "$oid": "682772454f488aa93fc50a62"
+  },
+  "libro_id": {
+    "$oid": "682771fa4f488aa93fc50a53"
+  },
+  "fecha_prestamo": {
+    "$date": "2025-05-05T00:00:00.000Z"
+  },
+  "fecha_devolucion": {
+    "$date": "2025-06-04T00:00:00.000Z"
+  },
+  "estado": "pendiente"
+}]
