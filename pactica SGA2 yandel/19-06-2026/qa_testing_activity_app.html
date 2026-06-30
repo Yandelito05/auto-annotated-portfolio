@@ -1,0 +1,569 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: transparent; color: var(--color-text-primary); }
+  .app-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 600px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .sidebar { background: var(--color-background-secondary); border-right: 0.5px solid var(--color-border-tertiary); padding: 1.25rem 0; }
+  .sidebar-header { padding: 0 1.25rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 0.75rem; }
+  .sidebar-header h1 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .sidebar-header p { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .nav-item { display: flex; align-items: center; gap: 9px; padding: 8px 1.25rem; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); border-left: 2px solid transparent; transition: all 0.15s; }
+  .nav-item:hover { background: var(--color-background-primary); color: var(--color-text-primary); }
+  .nav-item.active { background: var(--color-background-primary); color: var(--color-text-primary); border-left-color: #378ADD; font-weight: 500; }
+  .nav-item i { font-size: 16px; }
+  .nav-section { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; padding: 1rem 1.25rem 0.4rem; }
+  .main { background: var(--color-background-primary); overflow: hidden; }
+  .panel { display: none; padding: 1.5rem; height: 100%; overflow-y: auto; }
+  .panel.active { display: block; }
+  .panel-title { font-size: 18px; font-weight: 500; margin-bottom: 0.25rem; }
+  .panel-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+  label { font-size: 13px; color: var(--color-text-secondary); display: block; margin-bottom: 4px; margin-top: 12px; }
+  input, select, textarea { width: 100%; font-size: 13px; }
+  textarea { resize: vertical; min-height: 70px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 13px; border-radius: var(--border-radius-md); cursor: pointer; font-family: var(--font-sans); transition: all 0.15s; }
+  .btn-primary { background: #185FA5; color: #fff; border: none; }
+  .btn-primary:hover { background: #0C447C; }
+  .btn-secondary { background: transparent; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-primary); }
+  .btn-secondary:hover { background: var(--color-background-secondary); }
+  .btn-danger { background: transparent; border: 0.5px solid var(--color-border-danger); color: var(--color-text-danger); }
+  .btn-danger:hover { background: var(--color-background-danger); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 14px; margin-bottom: 8px; }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .card-title { font-size: 13px; font-weight: 500; }
+  .card-meta { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+  .badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 500; }
+  .badge-blue { background: #E6F1FB; color: #0C447C; }
+  .badge-green { background: #EAF3DE; color: #27500A; }
+  .badge-amber { background: #FAEEDA; color: #633806; }
+  .badge-red { background: #FCEBEB; color: #791F1F; }
+  .badge-gray { background: #F1EFE8; color: #444441; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+  .empty { text-align: center; padding: 2rem; color: var(--color-text-tertiary); font-size: 13px; }
+  .empty i { font-size: 32px; display: block; margin-bottom: 8px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+  .jira-config { background: #E6F1FB; border: 0.5px solid #B5D4F4; border-radius: var(--border-radius-md); padding: 12px 14px; margin-bottom: 1.25rem; }
+  .jira-config p { font-size: 12px; color: #185FA5; }
+  .status-bar { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--color-background-secondary); border-top: 0.5px solid var(--color-border-tertiary); font-size: 12px; color: var(--color-text-secondary); margin-top: 1rem; border-radius: var(--border-radius-md); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #639922; }
+  .dot.red { background: #E24B4A; }
+  .dot.amber { background: #BA7517; }
+
+  /* App con bugs */
+  .buggy-app { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .buggy-header { background: #185FA5; padding: 12px 16px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .buggy-header h2 { font-size: 15px; font-weight: 500; }
+  .buggy-body { padding: 1.25rem; }
+  .buggy-result { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; margin-top: 1rem; font-size: 13px; }
+  .buggy-result .res-val { font-size: 22px; font-weight: 500; color: #185FA5; }
+  .bug-marker { background: #FAEEDA; border: 0.5px solid #FAC775; border-radius: 4px; padding: 2px 6px; font-size: 10px; color: #633806; font-weight: 500; margin-left: 6px; cursor: help; }
+  .bug-doc { background: #FCEBEB; border: 0.5px solid #F7C1C1; border-radius: var(--border-radius-md); padding: 12px 14px; margin-top: 1rem; }
+  .bug-doc p { font-size: 12px; color: #791F1F; }
+  .bug-doc ul { font-size: 12px; color: #791F1F; padding-left: 1.2rem; margin-top: 4px; }
+  .tabs { display: flex; gap: 0; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 1.25rem; }
+  .tab { padding: 8px 16px; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); border-bottom: 2px solid transparent; margin-bottom: -0.5px; transition: all 0.15s; }
+  .tab.active { color: #185FA5; border-bottom-color: #185FA5; font-weight: 500; }
+  .tab:hover { color: var(--color-text-primary); }
+  .tc-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 14px; margin-bottom: 8px; background: var(--color-background-primary); }
+  .tc-steps { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; padding-left: 1rem; }
+  .tc-steps li { margin-bottom: 2px; }
+  .export-preview { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; font-size: 11px; font-family: var(--font-mono); color: var(--color-text-secondary); max-height: 200px; overflow-y: auto; margin-top: 12px; white-space: pre; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+  .stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; text-align: center; }
+  .stat .n { font-size: 24px; font-weight: 500; }
+  .stat .l { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .toast { position: fixed; bottom: 16px; right: 16px; background: #185FA5; color: #fff; padding: 10px 16px; border-radius: var(--border-radius-md); font-size: 13px; display: none; z-index: 100; }
+</style>
+
+<div class="app-shell">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <h1><i class="ti ti-test-pipe" style="font-size:16px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>QA Testing Lab</h1>
+      <p>Actividad de comprobación</p>
+    </div>
+    <span class="nav-section">Gestión de pruebas</span>
+    <div class="nav-item active" onclick="showPanel('us')"><i class="ti ti-user-check" aria-hidden="true"></i>Historias de usuario</div>
+    <div class="nav-item" onclick="showPanel('tc')"><i class="ti ti-clipboard-list" aria-hidden="true"></i>Casos de prueba</div>
+    <div class="nav-item" onclick="showPanel('jira')"><i class="ti ti-upload" aria-hidden="true"></i>Exportar a Jira</div>
+    <span class="nav-section">Software bajo prueba</span>
+    <div class="nav-item" onclick="showPanel('app')"><i class="ti ti-bug" aria-hidden="true"></i>App Calculos</div>
+    <div class="nav-item" onclick="showPanel('rubrica')"><i class="ti ti-checklist" aria-hidden="true"></i>Rúbrica de eval.</div>
+  </nav>
+
+  <div class="main">
+
+    <!-- PANEL: Historias de usuario -->
+    <div class="panel active" id="panel-us">
+      <p class="panel-title">Historias de usuario</p>
+      <p class="panel-sub">Crea las historias de usuario para el software a probar. Serán subidas a Jira como issues tipo Story.</p>
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('us','form')">Nueva historia</div>
+        <div class="tab" onclick="switchTab('us','list')">Lista (<span id="us-count">0</span>)</div>
+      </div>
+      <div id="us-form-tab">
+        <div class="row">
+          <div>
+            <label>ID de historia</label>
+            <input type="text" id="us-id" placeholder="US-001" />
+          </div>
+          <div>
+            <label>Prioridad</label>
+            <select id="us-prio">
+              <option>Alta</option><option>Media</option><option>Baja</option>
+            </select>
+          </div>
+        </div>
+        <label>Título de la historia</label>
+        <input type="text" id="us-title" placeholder="Como [rol], quiero [acción] para [beneficio]" />
+        <label>Descripción completa</label>
+        <textarea id="us-desc" placeholder="Como usuario del sistema de presupuestos, quiero calcular el costo total de un proyecto de software para poder planificar mi presupuesto correctamente."></textarea>
+        <label>Criterios de aceptación</label>
+        <textarea id="us-ac" placeholder="Dado que ingreso valores válidos...&#10;Cuando presiono calcular...&#10;Entonces el sistema muestra el total correcto..."></textarea>
+        <div class="row">
+          <div>
+            <label>Componente</label>
+            <select id="us-comp">
+              <option>Cálculo de costos</option>
+              <option>Registro de recursos</option>
+              <option>Generación de reportes</option>
+              <option>Configuración</option>
+            </select>
+          </div>
+          <div>
+            <label>Story points</label>
+            <input type="number" id="us-sp" value="3" min="1" max="21" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="addUS()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar historia</button>
+          <button class="btn btn-secondary" onclick="fillUSDemo()">Cargar ejemplo</button>
+        </div>
+      </div>
+      <div id="us-list-tab" style="display:none;">
+        <div id="us-list-container"><div class="empty"><i class="ti ti-inbox" aria-hidden="true"></i>No hay historias creadas aún</div></div>
+      </div>
+    </div>
+
+    <!-- PANEL: Casos de prueba -->
+    <div class="panel" id="panel-tc">
+      <p class="panel-title">Casos de prueba</p>
+      <p class="panel-sub">Define los casos de prueba vinculados a las historias de usuario. Se subirán a Jira como Test Cases.</p>
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('tc','form')">Nuevo caso</div>
+        <div class="tab" onclick="switchTab('tc','list')">Lista (<span id="tc-count">0</span>)</div>
+      </div>
+      <div id="tc-form-tab">
+        <div class="row">
+          <div>
+            <label>ID del caso</label>
+            <input type="text" id="tc-id" placeholder="TC-001" />
+          </div>
+          <div>
+            <label>Historia relacionada</label>
+            <select id="tc-us-ref"><option value="">-- seleccionar --</option></select>
+          </div>
+        </div>
+        <label>Título del caso de prueba</label>
+        <input type="text" id="tc-title" placeholder="Verificar que el cálculo de costo devuelve resultado correcto" />
+        <div class="row">
+          <div>
+            <label>Tipo de prueba</label>
+            <select id="tc-type">
+              <option>Funcional</option><option>Regresión</option><option>Límite</option><option>Negativo</option><option>Integración</option>
+            </select>
+          </div>
+          <div>
+            <label>Prioridad</label>
+            <select id="tc-prio"><option>Alta</option><option>Media</option><option>Baja</option></select>
+          </div>
+        </div>
+        <label>Precondiciones</label>
+        <input type="text" id="tc-pre" placeholder="El sistema está iniciado. El usuario tiene permisos." />
+        <label>Pasos de ejecución</label>
+        <textarea id="tc-steps" placeholder="1. Ingresar al módulo de costos&#10;2. Ingresar tarifa por hora: 50&#10;3. Ingresar horas: 100&#10;4. Seleccionar moneda: USD&#10;5. Presionar 'Calcular'"></textarea>
+        <label>Resultado esperado</label>
+        <textarea id="tc-expected" placeholder="El sistema muestra el total = $5,000.00 USD"></textarea>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="addTC()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar caso</button>
+          <button class="btn btn-secondary" onclick="fillTCDemo()">Cargar ejemplo</button>
+        </div>
+      </div>
+      <div id="tc-list-tab" style="display:none;">
+        <div id="tc-list-container"><div class="empty"><i class="ti ti-inbox" aria-hidden="true"></i>No hay casos de prueba creados aún</div></div>
+      </div>
+    </div>
+
+    <!-- PANEL: Exportar a Jira -->
+    <div class="panel" id="panel-jira">
+      <p class="panel-title">Exportar a Jira</p>
+      <p class="panel-sub">Configura tu proyecto Jira y sube las historias y casos de prueba creados.</p>
+      <div class="jira-config">
+        <p><i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:4px" aria-hidden="true"></i>Necesitas un token de API de Jira Cloud. Ve a <strong>id.atlassian.com → Security → API token</strong>.</p>
+      </div>
+      <div class="row">
+        <div>
+          <label>URL de Jira (tu dominio)</label>
+          <input type="text" id="jira-url" placeholder="https://tuequipo.atlassian.net" />
+        </div>
+        <div>
+          <label>Email de la cuenta</label>
+          <input type="text" id="jira-email" placeholder="usuario@ejemplo.com" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>API Token</label>
+          <input type="password" id="jira-token" placeholder="Tu token de Jira" />
+        </div>
+        <div>
+          <label>Clave del proyecto</label>
+          <input type="text" id="jira-project" placeholder="QA" />
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="stat-grid">
+        <div class="stat"><div class="n" id="st-us">0</div><div class="l">Historias listas</div></div>
+        <div class="stat"><div class="n" id="st-tc">0</div><div class="l">Casos de prueba</div></div>
+        <div class="stat"><div class="n" id="st-total">0</div><div class="l">Total a subir</div></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="previewJira()"><i class="ti ti-eye" aria-hidden="true"></i>Vista previa JSON</button>
+        <button class="btn btn-primary" onclick="exportToJira()"><i class="ti ti-upload" aria-hidden="true"></i>Subir a Jira ↗</button>
+        <button class="btn btn-secondary" onclick="downloadJSON()"><i class="ti ti-download" aria-hidden="true"></i>Descargar JSON</button>
+      </div>
+      <div id="jira-preview" style="display:none;">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin-top:12px;margin-bottom:4px;">Vista previa del payload (primeros 2 issues):</p>
+        <div class="export-preview" id="jira-preview-code"></div>
+      </div>
+      <div id="jira-log" style="margin-top:12px;"></div>
+    </div>
+
+    <!-- PANEL: App con bugs -->
+    <div class="panel" id="panel-app">
+      <p class="panel-title">Software bajo prueba</p>
+      <div class="buggy-app">
+        <div class="buggy-header">
+          <i class="ti ti-calculator" style="font-size:20px" aria-hidden="true"></i>
+          <h2>Sistema de Presupuesto de Proyectos v1.0</h2>
+        </div>
+        <div class="buggy-body">
+          <div class="row3">
+            <div>
+              <label>Tarifa por hora (USD) <span class="bug-marker" title="Bug #1: acepta valores negativos"></span></label>
+              <input type="number" id="b-rate" value="50" placeholder="ej. 50" />
+            </div>
+            <div>
+              <label>Horas estimadas <span class="bug-marker" title="Bug #2: no valida 0 horas"></span></label>
+              <input type="number" id="b-hours" value="100" placeholder="ej. 100" />
+            </div>
+            <div>
+              <label>Número de recursos</label>
+              <input type="number" id="b-res" value="2" placeholder="ej. 2" />
+            </div>
+          </div>
+          <div class="row" style="margin-top:4px;">
+            <div>
+              <label>Moneda <span class="bug-marker" title="Bug #3: conversión EUR incorrecta"></span></label>
+              <select id="b-curr">
+                <option value="1">USD</option>
+                <option value="0.93">EUR</option>
+                <option value="540">CRC</option>
+              </select>
+            </div>
+            <div>
+              <label>% Contingencia <span class="bug-marker" title="Bug #4: aplica doble si >20%"></span></label>
+              <input type="number" id="b-cont" value="10" min="0" max="50" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="calcBuggy()"><i class="ti ti-calculator" aria-hidden="true"></i>Calcular presupuesto</button>
+            <button class="btn btn-secondary" onclick="resetBuggy()">Limpiar</button>
+          </div>
+          <div class="buggy-result" id="buggy-result" style="display:none;">
+            <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Costo total del proyecto</div>
+            <div class="res-val" id="buggy-total">$0.00</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px;" id="buggy-breakdown"></div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <div class="actions" style="margin-top:1rem;">
+        <button class="btn btn-danger" onclick="sendPrompt('Quiero crear casos de prueba para los bugs encontrados en la app de presupuesto')"><i class="ti ti-clipboard-list" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- PANEL: Rúbrica -->
+    <div class="panel" id="panel-rubrica">
+      <p class="panel-title">Rúbrica de evaluación</p>
+      <p class="panel-sub">Lista de verificación para la actividad. Marca los criterios completados.</p>
+      <div id="rubrica-list"></div>
+      <div class="stat-grid" style="margin-top:1rem;">
+        <div class="stat"><div class="n" id="rub-done">0</div><div class="l">Completados</div></div>
+        <div class="stat"><div class="n">15</div><div class="l">Total criterios</div></div>
+        <div class="stat"><div class="n" id="rub-pct">0%</div><div class="l">Progreso</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const state = { us: [], tc: [] };
+
+const rubricaItems = [
+  "Evidencia manejo del tiempo y tareas conforme lo planificado",
+  "Responde oportunamente a los cambios del entorno de ejecución de pruebas",
+  "Software gestor de administración de pruebas descargado según requerimientos",
+  "Software gestor de administración de pruebas instalado según requerimientos",
+  "Software gestor de administración de pruebas configurado según requerimientos",
+  "Herramienta de ejecución de pruebas descargada según requerimientos",
+  "Herramienta de ejecución de pruebas instalada según requerimientos",
+  "Herramienta de ejecución de pruebas configurada según requerimientos",
+  "Primer navegador instalado según requerimientos de pruebas",
+  "Segundo navegador instalado según requerimientos de pruebas",
+  "Tercer navegador instalado según requerimientos de pruebas",
+  "Extensiones instaladas permiten desarrollar las características de prueba",
+  "Extensiones instaladas con los permisos requeridos",
+  "Software por testear proporcionado con fuentes y ejecutables según plan",
+  "Software por testear instalado según requerimientos técnicos"
+];
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  updateStats();
+}
+
+function switchTab(panel, tab) {
+  const tabs = event.currentTarget.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if (panel === 'us') {
+    document.getElementById('us-form-tab').style.display = tab === 'form' ? 'block' : 'none';
+    document.getElementById('us-list-tab').style.display = tab === 'list' ? 'block' : 'none';
+    if (tab === 'list') renderUSList();
+  } else {
+    document.getElementById('tc-form-tab').style.display = tab === 'form' ? 'block' : 'none';
+    document.getElementById('tc-list-tab').style.display = tab === 'list' ? 'block' : 'none';
+    if (tab === 'list') renderTCList();
+  }
+}
+
+function toast(msg, err) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? '#A32D2D' : '#185FA5';
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2800);
+}
+
+function addUS() {
+  const id = document.getElementById('us-id').value.trim();
+  const title = document.getElementById('us-title').value.trim();
+  const desc = document.getElementById('us-desc').value.trim();
+  const ac = document.getElementById('us-ac').value.trim();
+  if (!id || !title) { toast('ID y título son obligatorios', true); return; }
+  state.us.push({ id, title, desc, ac, prio: document.getElementById('us-prio').value, comp: document.getElementById('us-comp').value, sp: document.getElementById('us-sp').value });
+  document.getElementById('us-count').textContent = state.us.length;
+  updateTCSelect();
+  toast('Historia ' + id + ' agregada');
+  ['us-id','us-title','us-desc','us-ac'].forEach(f => document.getElementById(f).value = '');
+}
+
+function addTC() {
+  const id = document.getElementById('tc-id').value.trim();
+  const title = document.getElementById('tc-title').value.trim();
+  if (!id || !title) { toast('ID y título son obligatorios', true); return; }
+  state.tc.push({ id, title, usRef: document.getElementById('tc-us-ref').value, type: document.getElementById('tc-type').value, prio: document.getElementById('tc-prio').value, pre: document.getElementById('tc-pre').value, steps: document.getElementById('tc-steps').value, expected: document.getElementById('tc-expected').value });
+  document.getElementById('tc-count').textContent = state.tc.length;
+  toast('Caso de prueba ' + id + ' agregado');
+  ['tc-id','tc-title','tc-pre','tc-steps','tc-expected'].forEach(f => document.getElementById(f).value = '');
+}
+
+function updateTCSelect() {
+  const sel = document.getElementById('tc-us-ref');
+  sel.innerHTML = '<option value="">-- seleccionar --</option>';
+  state.us.forEach(u => { const o = document.createElement('option'); o.value = u.id; o.textContent = u.id + ' - ' + u.title.substring(0,40); sel.appendChild(o); });
+}
+
+function renderUSList() {
+  const c = document.getElementById('us-list-container');
+  if (!state.us.length) { c.innerHTML = '<div class="empty"><i class="ti ti-inbox"></i>No hay historias creadas aún</div>'; return; }
+  c.innerHTML = state.us.map((u,i) => `
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${u.id}: ${u.title}</div>
+          <div class="card-meta">${u.comp} · ${u.sp} pts</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span class="badge ${u.prio==='Alta'?'badge-red':u.prio==='Media'?'badge-amber':'badge-gray'}">${u.prio}</span>
+          <button class="btn btn-danger" style="padding:3px 8px;font-size:11px;" onclick="removeUS(${i})"><i class="ti ti-trash" style="font-size:13px"></i></button>
+        </div>
+      </div>
+      ${u.ac ? `<div style="font-size:11px;color:var(--color-text-secondary);margin-top:6px;"><strong>AC:</strong> ${u.ac.substring(0,120)}${u.ac.length>120?'...':''}</div>` : ''}
+    </div>`).join('');
+}
+
+function renderTCList() {
+  const c = document.getElementById('tc-list-container');
+  if (!state.tc.length) { c.innerHTML = '<div class="empty"><i class="ti ti-inbox"></i>No hay casos de prueba creados aún</div>'; return; }
+  c.innerHTML = state.tc.map((t,i) => `
+    <div class="tc-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">${t.id}: ${t.title}</div>
+          <div class="card-meta">${t.type} · ${t.usRef ? 'Vinculado a ' + t.usRef : 'Sin vincular'}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <span class="badge ${t.prio==='Alta'?'badge-red':t.prio==='Media'?'badge-amber':'badge-gray'}">${t.prio}</span>
+          <button class="btn btn-danger" style="padding:3px 8px;font-size:11px;" onclick="removeTC(${i})"><i class="ti ti-trash" style="font-size:13px"></i></button>
+        </div>
+      </div>
+      ${t.steps ? `<ol class="tc-steps">${t.steps.split('\n').filter(s=>s).map(s=>`<li>${s.replace(/^\d+\.\s*/,'')}</li>`).join('')}</ol>` : ''}
+      ${t.expected ? `<div style="font-size:11px;margin-top:6px;"><span style="color:var(--color-text-secondary);">Esperado:</span> ${t.expected.substring(0,100)}</div>` : ''}
+    </div>`).join('');
+}
+
+function removeUS(i) { state.us.splice(i,1); document.getElementById('us-count').textContent = state.us.length; updateTCSelect(); renderUSList(); }
+function removeTC(i) { state.tc.splice(i,1); document.getElementById('tc-count').textContent = state.tc.length; renderTCList(); }
+
+function updateStats() {
+  document.getElementById('st-us').textContent = state.us.length;
+  document.getElementById('st-tc').textContent = state.tc.length;
+  document.getElementById('st-total').textContent = state.us.length + state.tc.length;
+}
+
+function buildJiraPayload() {
+  const proj = document.getElementById('jira-project').value || 'QA';
+  const issues = [];
+  state.us.forEach(u => {
+    issues.push({ fields: { project: { key: proj }, summary: '[' + u.id + '] ' + u.title, description: { type: 'doc', version: 1, content: [{ type: 'paragraph', content: [{ type: 'text', text: (u.desc || '') + '\n\nCriterios de aceptación:\n' + (u.ac || '') }] }] }, issuetype: { name: 'Story' }, priority: { name: u.prio === 'Alta' ? 'High' : u.prio === 'Media' ? 'Medium' : 'Low' }, labels: [u.comp.replace(/ /g,'-'), 'actividad-qa'], story_points: parseInt(u.sp) || 3 } });
+  });
+  state.tc.forEach(t => {
+    issues.push({ fields: { project: { key: proj }, summary: '[' + t.id + '] ' + t.title, description: { type: 'doc', version: 1, content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Tipo: ' + t.type + '\nPrecondiciones: ' + (t.pre||'') + '\n\nPasos:\n' + (t.steps||'') + '\n\nResultado esperado:\n' + (t.expected||'') }] }] }, issuetype: { name: 'Task' }, priority: { name: t.prio === 'Alta' ? 'High' : t.prio === 'Media' ? 'Medium' : 'Low' }, labels: ['caso-de-prueba', 'actividad-qa', ...(t.usRef ? ['linked-' + t.usRef] : [])] } });
+  });
+  return issues;
+}
+
+function previewJira() {
+  const payload = buildJiraPayload();
+  if (!payload.length) { toast('No hay issues para previsualizar', true); return; }
+  const preview = payload.slice(0,2).map(i => JSON.stringify(i, null, 2)).join('\n\n---\n\n');
+  document.getElementById('jira-preview-code').textContent = preview;
+  document.getElementById('jira-preview').style.display = 'block';
+  updateStats();
+}
+
+async function exportToJira() {
+  const url = document.getElementById('jira-url').value.trim();
+  const email = document.getElementById('jira-email').value.trim();
+  const token = document.getElementById('jira-token').value.trim();
+  if (!url || !email || !token) { toast('Completa URL, email y token de Jira', true); return; }
+  const issues = buildJiraPayload();
+  if (!issues.length) { toast('No hay issues para subir', true); return; }
+  const log = document.getElementById('jira-log');
+  log.innerHTML = '<div class="status-bar"><div class="dot amber"></div>Subiendo ' + issues.length + ' issues a Jira...</div>';
+  const creds = btoa(email + ':' + token);
+  let ok = 0, fail = 0;
+  for (const issue of issues) {
+    try {
+      const res = await fetch(url + '/rest/api/3/issue', { method: 'POST', headers: { 'Authorization': 'Basic ' + creds, 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(issue) });
+      if (res.ok) { ok++; } else { fail++; }
+    } catch(e) { fail++; }
+  }
+  log.innerHTML = `<div class="status-bar"><div class="dot ${fail?'amber':''}"></div>${ok} issues subidos · ${fail} fallidos</div>`;
+  toast(ok + ' issues subidos a Jira');
+}
+
+function downloadJSON() {
+  const issues = buildJiraPayload();
+  if (!issues.length) { toast('No hay datos para descargar', true); return; }
+  const blob = new Blob([JSON.stringify({ issues }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'jira-issues-qa.json';
+  a.click();
+  toast('JSON descargado');
+}
+
+// Buggy app calculations
+function calcBuggy() {
+  const rate = parseFloat(document.getElementById('b-rate').value) || 0;
+  const hours = parseFloat(document.getElementById('b-hours').value) || 0;
+  const res = parseFloat(document.getElementById('b-res').value) || 1;
+  const curr = parseFloat(document.getElementById('b-curr').value);
+  const cont = parseFloat(document.getElementById('b-cont').value) || 0;
+  const currName = document.getElementById('b-curr').options[document.getElementById('b-curr').selectedIndex].text;
+
+  // Bug #4: aplica contingencia doble si > 20
+  let base = rate * hours * res;
+  let contingencia = base * (cont / 100);
+  if (cont > 20) contingencia += base * (cont / 100); // BUG: doble aplicación
+  let total = base + contingencia;
+  // Bug #3: la conversión multiplica en lugar de dividir para EUR
+  let converted = total * curr;
+
+  document.getElementById('buggy-total').textContent = converted.toFixed(2) + ' ' + currName;
+  document.getElementById('buggy-breakdown').innerHTML =
+    'Base: ' + base.toFixed(2) + ' · Contingencia (' + cont + '%): ' + contingencia.toFixed(2) + ' · Factor moneda: ' + curr;
+  document.getElementById('buggy-result').style.display = 'block';
+}
+
+function resetBuggy() {
+  document.getElementById('b-rate').value = 50;
+  document.getElementById('b-hours').value = 100;
+  document.getElementById('b-res').value = 2;
+  document.getElementById('b-cont').value = 10;
+  document.getElementById('buggy-result').style.display = 'none';
+}
+
+// Demo data
+function fillUSDemo() {
+  document.getElementById('us-id').value = 'US-00' + (state.us.length + 1);
+  document.getElementById('us-title').value = 'Como gestor de proyectos, quiero calcular el costo total para planificar el presupuesto';
+  document.getElementById('us-desc').value = 'El sistema debe calcular el costo de un proyecto de software dado la tarifa por hora, horas estimadas y número de recursos. Debe soportar múltiples monedas y porcentaje de contingencia.';
+  document.getElementById('us-ac').value = 'Dado que ingreso tarifa=50, horas=100, recursos=2\nCuando presiono Calcular\nEntonces el sistema muestra $10,000.00 USD\n\nDado que ingreso un valor negativo en tarifa\nCuando presiono Calcular\nEntonces el sistema muestra mensaje de error de validación';
+  document.getElementById('us-sp').value = '5';
+}
+
+function fillTCDemo() {
+  document.getElementById('tc-id').value = 'TC-00' + (state.tc.length + 1);
+  document.getElementById('tc-title').value = 'Verificar rechazo de tarifa negativa en cálculo de presupuesto';
+  document.getElementById('tc-pre').value = 'El sistema está iniciado. El módulo de cálculo está visible.';
+  document.getElementById('tc-steps').value = '1. Ingresar tarifa por hora: -50\n2. Ingresar horas: 100\n3. Ingresar recursos: 2\n4. Presionar Calcular';
+  document.getElementById('tc-expected').value = 'El sistema muestra mensaje: "La tarifa debe ser mayor a 0". No se realiza cálculo.';
+  document.getElementById('tc-type').value = 'Negativo';
+}
+
+// Rúbrica
+function initRubrica() {
+  const c = document.getElementById('rubrica-list');
+  const checks = JSON.parse(localStorage.getItem('rub') || '{}');
+  c.innerHTML = rubricaItems.map((item, i) => `
+    <div class="card" style="margin-bottom:6px;">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin:0;">
+        <input type="checkbox" id="rub-${i}" ${checks[i]?'checked':''} onchange="updateRubrica()" style="width:auto;margin-top:2px;flex-shrink:0;" />
+        <span style="font-size:13px;"><strong style="color:var(--color-text-secondary);font-weight:500;">${i+1}.</strong> ${item}</span>
+      </label>
+    </div>`).join('');
+  updateRubrica();
+}
+
+function updateRubrica() {
+  let done = 0;
+  const checks = {};
+  rubricaItems.forEach((_,i) => { const el = document.getElementById('rub-'+i); if(el&&el.checked){done++;checks[i]=true;} });
+  document.getElementById('rub-done').textContent = done;
+  document.getElementById('rub-pct').textContent = Math.round(done/15*100) + '%';
+  try { localStorage.setItem('rub', JSON.stringify(checks)); } catch(e) {}
+}
+
+initRubrica();
+updateStats();
+</script>

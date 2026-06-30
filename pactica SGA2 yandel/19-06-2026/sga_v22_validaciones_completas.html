@@ -1,0 +1,599 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:transparent;font-size:14px}
+.app{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.topbar{background:#185FA5;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.topbar h1{font-size:15px;font-weight:500;color:#fff}
+.ver{font-size:11px;color:#B5D4F4;margin-left:auto;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:99px}
+.nav{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.nav-btn{padding:10px 18px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:var(--color-text-secondary);background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font-sans);transition:all .15s}
+.nav-btn.active{color:#185FA5;border-bottom-color:#185FA5;font-weight:500}
+.nav-btn:hover{color:var(--color-text-primary)}
+.view{padding:1.25rem;background:var(--color-background-primary)}
+.view.hidden{display:none}
+label{font-size:12px;color:var(--color-text-secondary);display:block;margin-bottom:3px;margin-top:10px}
+label:first-child{margin-top:0}
+label .req{color:#E24B4A;margin-left:2px}
+input,select{width:100%;font-size:13px}
+input.error{border-color:#E24B4A !important;background:#FCEBEB}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:13px;border-radius:var(--border-radius-md);cursor:pointer;font-family:var(--font-sans);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-primary);transition:all .15s}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-blue{background:#185FA5;color:#fff;border:none}
+.btn-blue:hover{background:#0C447C}
+.btn-red{border-color:#F09595;color:#791F1F}
+.btn-red:hover{background:#FCEBEB}
+.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.msg{padding:8px 12px;border-radius:var(--border-radius-md);font-size:12px;margin-top:10px}
+.msg-ok{background:#EAF3DE;color:#27500A}
+.msg-err{background:#FCEBEB;color:#791F1F}
+.msg-warn{background:#FAEEDA;color:#633806}
+.err-list{background:#FCEBEB;border-radius:var(--border-radius-md);padding:8px 12px;margin-top:10px;font-size:12px;color:#791F1F}
+.err-list ul{padding-left:1.2rem;margin-top:4px}
+.err-list li{margin-bottom:2px}
+.table-wrap{overflow-x:auto;margin-top:1rem}
+table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+th{background:var(--color-background-secondary);padding:7px 10px;text-align:left;font-weight:500;font-size:11px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+tr:hover td{background:var(--color-background-secondary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:500}
+.b-green{background:#EAF3DE;color:#27500A}
+.b-red{background:#FCEBEB;color:#791F1F}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;text-align:center}
+.stat .n{font-size:22px;font-weight:500}
+.stat .l{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.search-row{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+.search-row input{flex:1}
+hr{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1rem 0}
+.fix-tag{font-size:10px;background:#EAF3DE;color:#27500A;border-radius:99px;padding:1px 6px;margin-left:4px;font-weight:500}
+.helper{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+</style>
+
+<h2 class="sr-only">SGA v2.2 — Sistema de Gestion Academica con todos los campos obligatorios validados</h2>
+
+<div class="app">
+  <div class="topbar">
+    <i class="ti ti-school" style="font-size:20px;color:#fff" aria-hidden="true"></i>
+    <h1>SGA — Sistema de Gestion Academica</h1>
+    <span class="ver">v2.2 — Corregido</span>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="goTo('registro',this)">Registro</button>
+    <button class="nav-btn" onclick="goTo('notas',this)">Notas</button>
+    <button class="nav-btn" onclick="goTo('estudiantes',this)">Estudiantes</button>
+    <button class="nav-btn" onclick="goTo('reportes',this)">Reportes</button>
+  </div>
+
+  <!-- REGISTRO -->
+  <div class="view" id="v-registro">
+    <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:10px;">Todos los campos marcados con <span style="color:#E24B4A">*</span> son obligatorios.</div>
+    <div class="row2">
+      <div>
+        <label>Nombre completo <span class="req">*</span></label>
+        <input type="text" id="r-nombre" placeholder="Ej. Maria Gonzalez" />
+      </div>
+      <div>
+        <label>Numero de cedula <span class="req">*</span> <span class="fix-tag">✓ DEF-001 DEF-003</span></label>
+        <input type="text" id="r-cedula" placeholder="Ej. 1-1234-5678" />
+        <div class="helper">Formato: X-XXXX-XXXX</div>
+      </div>
+    </div>
+    <div class="row3">
+      <div>
+        <label>Fecha de nacimiento <span class="req">*</span> <span class="fix-tag">✓ DEF-004</span></label>
+        <input type="date" id="r-fecha" />
+        <div class="helper">El estudiante debe ser mayor de 15 anos.</div>
+      </div>
+      <div>
+        <label>Carrera <span class="req">*</span></label>
+        <select id="r-carrera">
+          <option value="">-- seleccionar --</option>
+          <option>Ingenieria en Sistemas</option>
+          <option>Ingenieria Industrial</option>
+          <option>Administracion de Empresas</option>
+          <option>Contabilidad</option>
+        </select>
+      </div>
+      <div>
+        <label>Ano academico <span class="req">*</span></label>
+        <select id="r-anio">
+          <option value="">-- seleccionar --</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+      </div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>Correo electronico <span class="req">*</span> <span class="fix-tag">✓ DEF-002</span></label>
+        <input type="text" id="r-email" placeholder="estudiante@itcr.ac.cr" />
+        <div class="helper">Debe contener @ y dominio (ej. nombre@correo.com).</div>
+      </div>
+      <div>
+        <label>Telefono <span class="req">*</span></label>
+        <input type="text" id="r-tel" placeholder="8888-8888" />
+        <div class="helper">Formato: XXXX-XXXX (8 digitos).</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-blue" onclick="registrar()"><i class="ti ti-user-plus" aria-hidden="true"></i>Registrar</button>
+      <button class="btn" onclick="limpiarReg()"><i class="ti ti-refresh" aria-hidden="true"></i>Limpiar</button>
+    </div>
+    <div id="r-msg"></div>
+  </div>
+
+  <!-- NOTAS -->
+  <div class="view hidden" id="v-notas">
+    <div class="row2">
+      <div>
+        <label>Estudiante <span class="req">*</span></label>
+        <select id="n-est"><option value="">-- seleccionar --</option></select>
+      </div>
+      <div>
+        <label>Curso <span class="req">*</span></label>
+        <select id="n-curso">
+          <option value="">-- seleccionar --</option>
+          <option>Programacion I</option>
+          <option>Bases de Datos</option>
+          <option>Redes de Computadoras</option>
+          <option>Matematica Discreta</option>
+          <option>Ingles Tecnico</option>
+        </select>
+      </div>
+    </div>
+    <div class="row3">
+      <div>
+        <label>Nota 1 (0–100) <span class="req">*</span> <span class="fix-tag">✓ DEF-007 DEF-008</span></label>
+        <input type="number" id="n-n1" placeholder="0" min="0" max="100" />
+      </div>
+      <div>
+        <label>Nota 2 (0–100) <span class="req">*</span></label>
+        <input type="number" id="n-n2" placeholder="0" min="0" max="100" />
+      </div>
+      <div>
+        <label>Examen Final (0–100) <span class="req">*</span></label>
+        <input type="number" id="n-ef" placeholder="0" min="0" max="100" />
+      </div>
+    </div>
+    <div id="n-preview" style="display:none;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-top:12px;font-size:13px;"></div>
+    <div class="actions">
+      <button class="btn btn-blue" onclick="guardarNota()"><i class="ti ti-calculator" aria-hidden="true"></i>Calcular y guardar</button>
+      <button class="btn" onclick="previsualizarNota()"><i class="ti ti-eye" aria-hidden="true"></i>Previsualizar</button>
+    </div>
+    <div id="n-msg"></div>
+    <hr>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;">
+      Ponderacion: Nota 1 = 30% · Nota 2 = 30% · Examen Final = 40% <span class="fix-tag">✓ DEF-006</span>
+    </p>
+    <div class="table-wrap">
+      <table>
+        <colgroup><col style="width:20%"><col style="width:20%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:15%"><col style="width:18%"></colgroup>
+        <thead><tr><th>Estudiante</th><th>Curso</th><th>N1</th><th>N2</th><th>Final</th><th>Promedio</th><th>Estado</th></tr></thead>
+        <tbody id="notas-tbody"><tr><td colspan="7" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Sin notas registradas</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ESTUDIANTES -->
+  <div class="view hidden" id="v-estudiantes">
+    <div class="search-row">
+      <i class="ti ti-search" style="color:var(--color-text-secondary)" aria-hidden="true"></i>
+      <input type="text" id="s-buscar" placeholder="Buscar por nombre o cedula..." oninput="buscar()" />
+    </div>
+    <div class="table-wrap">
+      <table>
+        <colgroup><col style="width:5%"><col style="width:18%"><col style="width:13%"><col style="width:17%"><col style="width:7%"><col style="width:7%"><col style="width:16%"><col style="width:12%"><col style="width:5%"></colgroup>
+        <thead><tr><th>ID</th><th>Nombre</th><th>Cedula</th><th>Carrera</th><th>Ano</th><th>Edad</th><th>Email</th><th>Telefono</th><th></th></tr></thead>
+        <tbody id="est-tbody"><tr><td colspan="9" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Sin estudiantes registrados</td></tr></tbody>
+      </table>
+    </div>
+    <div id="est-msg"></div>
+  </div>
+
+  <!-- REPORTES -->
+  <div class="view hidden" id="v-reportes">
+    <div class="stat-row">
+      <div class="stat"><div class="n" id="rep-total">0</div><div class="l">Estudiantes</div></div>
+      <div class="stat"><div class="n" id="rep-aprobados">0</div><div class="l">Aprobados</div></div>
+      <div class="stat"><div class="n" id="rep-reprobados">0</div><div class="l">Reprobados</div></div>
+      <div class="stat"><div class="n" id="rep-prom">—</div><div class="l">Promedio general</div></div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>Filtrar por carrera</label>
+        <select id="rep-carrera" onchange="generarReporte()">
+          <option value="">Todas las carreras</option>
+          <option>Ingenieria en Sistemas</option>
+          <option>Ingenieria Industrial</option>
+          <option>Administracion de Empresas</option>
+          <option>Contabilidad</option>
+        </select>
+      </div>
+      <div>
+        <label>Ordenar por <span class="fix-tag">✓ DEF-012b</span></label>
+        <select id="rep-orden" onchange="generarReporte()">
+          <option value="nombre">Nombre</option>
+          <option value="promedio">Promedio</option>
+          <option value="cedula">Cedula</option>
+        </select>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-blue" onclick="generarReporte()"><i class="ti ti-chart-bar" aria-hidden="true"></i>Generar reporte</button>
+      <button class="btn" onclick="exportarCSV()"><i class="ti ti-download" aria-hidden="true"></i>Exportar CSV <span class="fix-tag">✓ DEF-013</span></button>
+    </div>
+    <div class="table-wrap" style="margin-top:1rem;">
+      <table>
+        <colgroup><col style="width:22%"><col style="width:16%"><col style="width:24%"><col style="width:18%"><col style="width:20%"></colgroup>
+        <thead><tr><th>Nombre</th><th>Cedula</th><th>Carrera</th><th>Promedio</th><th>Estado</th></tr></thead>
+        <tbody id="rep-tbody"><tr><td colspan="5" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Genere un reporte para ver resultados</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const db = { estudiantes: [], notas: [], nextId: 1 };
+
+function goTo(v, btn) {
+  document.querySelectorAll('.view').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('v-' + v).classList.remove('hidden');
+  if (btn) btn.classList.add('active');
+  if (v === 'notas') poblarSelect();
+  if (v === 'estudiantes') renderEst();
+  if (v === 'reportes') generarReporte();
+}
+
+function limpiarErrores(ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('error');
+  });
+}
+
+function marcarError(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('error');
+}
+
+function mostrarErrores(containerId, errores) {
+  const el = document.getElementById(containerId);
+  if (!errores.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="err-list">
+    <strong>Por favor corrija los siguientes errores:</strong>
+    <ul>${errores.map(e => `<li>${e}</li>`).join('')}</ul>
+  </div>`;
+}
+
+// ── Validaciones ──────────────────────────────────────────────────────────────
+function emailValido(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function telefonoValido(tel) {
+  // Acepta formato XXXX-XXXX o 8 digitos seguidos
+  return /^\d{4}-\d{4}$/.test(tel) || /^\d{8}$/.test(tel);
+}
+
+function fechaValida(fecha) {
+  if (!fecha) return false;
+  const hoy = new Date();
+  const nac = new Date(fecha);
+  // No puede ser fecha futura
+  if (nac >= hoy) return false;
+  // Debe ser mayor de 15 anos
+  const edad = calcularEdad(fecha);
+  return edad >= 15;
+}
+
+function calcularEdad(fechaNac) {
+  const hoy = new Date();
+  const nac = new Date(fechaNac);
+  let edad = hoy.getFullYear() - nac.getFullYear();
+  const m = hoy.getMonth() - nac.getMonth();
+  if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--;
+  return edad;
+}
+
+function registrar() {
+  const campos = ['r-nombre','r-cedula','r-fecha','r-carrera','r-anio','r-email','r-tel'];
+  limpiarErrores(campos);
+
+  const nombre  = document.getElementById('r-nombre').value.trim();
+  const cedula  = document.getElementById('r-cedula').value.trim();
+  const fecha   = document.getElementById('r-fecha').value;
+  const carrera = document.getElementById('r-carrera').value;
+  const anio    = document.getElementById('r-anio').value;
+  const email   = document.getElementById('r-email').value.trim();
+  const tel     = document.getElementById('r-tel').value.trim();
+
+  const errores = [];
+
+  // Nombre obligatorio
+  if (!nombre) {
+    errores.push('El nombre completo es obligatorio.');
+    marcarError('r-nombre');
+  }
+
+  // Cedula obligatoria y sin duplicados
+  if (!cedula) {
+    errores.push('El numero de cedula es obligatorio.');
+    marcarError('r-cedula');
+  } else if (db.estudiantes.find(e => e.cedula === cedula)) {
+    errores.push('Ya existe un estudiante registrado con ese numero de cedula.');
+    marcarError('r-cedula');
+  }
+
+  // Fecha obligatoria y valida
+  if (!fecha) {
+    errores.push('La fecha de nacimiento es obligatoria.');
+    marcarError('r-fecha');
+  } else if (!fechaValida(fecha)) {
+    const nac = new Date(fecha);
+    if (nac >= new Date()) {
+      errores.push('La fecha de nacimiento no puede ser una fecha futura.');
+    } else {
+      errores.push('El estudiante debe ser mayor de 15 anos.');
+    }
+    marcarError('r-fecha');
+  }
+
+  // Carrera obligatoria
+  if (!carrera) {
+    errores.push('Debe seleccionar una carrera.');
+    marcarError('r-carrera');
+  }
+
+  // Ano obligatorio
+  if (!anio) {
+    errores.push('Debe seleccionar el ano academico.');
+    marcarError('r-anio');
+  }
+
+  // Email obligatorio y con formato valido
+  if (!email) {
+    errores.push('El correo electronico es obligatorio.');
+    marcarError('r-email');
+  } else if (!emailValido(email)) {
+    errores.push('El correo electronico no tiene formato valido (debe contener @ y dominio, ej. nombre@correo.com).');
+    marcarError('r-email');
+  }
+
+  // Telefono obligatorio y con formato valido
+  if (!tel) {
+    errores.push('El numero de telefono es obligatorio.');
+    marcarError('r-tel');
+  } else if (!telefonoValido(tel)) {
+    errores.push('El telefono no tiene formato valido. Use el formato XXXX-XXXX (ej. 8888-1111).');
+    marcarError('r-tel');
+  }
+
+  if (errores.length > 0) {
+    mostrarErrores('r-msg', errores);
+    return;
+  }
+
+  const edad = calcularEdad(fecha);
+  const id = db.nextId++;
+  db.estudiantes.push({ id, nombre, cedula, fecha, carrera, anio, email, tel, edad });
+  poblarSelect();
+
+  document.getElementById('r-msg').innerHTML =
+    `<div class="msg msg-ok">Estudiante "${nombre}" registrado correctamente con ID ${id}. Edad calculada: ${edad} anos.</div>`;
+  limpiarReg();
+}
+
+function limpiarReg() {
+  ['r-nombre','r-cedula','r-fecha','r-email','r-tel'].forEach(f => document.getElementById(f).value = '');
+  document.getElementById('r-carrera').value = '';
+  document.getElementById('r-anio').value = '';
+  limpiarErrores(['r-nombre','r-cedula','r-fecha','r-carrera','r-anio','r-email','r-tel']);
+}
+
+function poblarSelect() {
+  const sel = document.getElementById('n-est');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">-- seleccionar --</option>';
+  db.estudiantes.forEach(e => {
+    const o = document.createElement('option');
+    o.value = e.id; o.textContent = e.nombre; sel.appendChild(o);
+  });
+  sel.value = cur;
+}
+
+function calcProm(n1, n2, ef) {
+  return parseFloat(((n1 * 0.30) + (n2 * 0.30) + (ef * 0.40)).toFixed(1));
+}
+
+function validarNotas(n1, n2, ef) {
+  if (isNaN(n1) || isNaN(n2) || isNaN(ef)) return 'Debe ingresar valores numericos en los tres campos de nota.';
+  if (n1 < 0 || n2 < 0 || ef < 0) return 'Las notas no pueden ser negativas. El rango valido es 0 a 100.';
+  if (n1 > 100) return 'La Nota 1 no puede ser mayor a 100.';
+  if (n2 > 100) return 'La Nota 2 no puede ser mayor a 100.';
+  if (ef > 100) return 'El Examen Final no puede ser mayor a 100.';
+  return null;
+}
+
+function previsualizarNota() {
+  const n1 = parseFloat(document.getElementById('n-n1').value);
+  const n2 = parseFloat(document.getElementById('n-n2').value);
+  const ef = parseFloat(document.getElementById('n-ef').value);
+  const err = validarNotas(n1, n2, ef);
+  if (err) { document.getElementById('n-msg').innerHTML = `<div class="msg msg-err">${err}</div>`; return; }
+  const prom = calcProm(n1, n2, ef);
+  const estado = prom >= 70 ? 'Aprobado' : 'Reprobado';
+  const div = document.getElementById('n-preview');
+  div.style.display = 'block';
+  div.innerHTML = `Promedio calculado: <strong>${prom}</strong> — <span style="color:${estado==='Aprobado'?'#27500A':'#791F1F'}">${estado}</span> <span style="font-size:11px;color:var(--color-text-secondary)">(30%+30%+40%)</span>`;
+}
+
+function guardarNota() {
+  const estId = parseInt(document.getElementById('n-est').value);
+  const curso = document.getElementById('n-curso').value;
+  const n1 = parseFloat(document.getElementById('n-n1').value);
+  const n2 = parseFloat(document.getElementById('n-n2').value);
+  const ef = parseFloat(document.getElementById('n-ef').value);
+  const msgEl = document.getElementById('n-msg');
+
+  if (!estId || !curso) {
+    msgEl.innerHTML = '<div class="msg msg-err">Debe seleccionar un estudiante y un curso antes de guardar.</div>';
+    return;
+  }
+  const err = validarNotas(n1, n2, ef);
+  if (err) { msgEl.innerHTML = `<div class="msg msg-err">${err}</div>`; return; }
+
+  const prom = calcProm(n1, n2, ef);
+  const estado = prom >= 70 ? 'Aprobado' : 'Reprobado';
+  const est = db.estudiantes.find(e => e.id === estId);
+  const registro = { estId, estNombre: est ? est.nombre : '—', curso, n1, n2, ef, prom, estado };
+
+  const idx = db.notas.findIndex(n => n.estId === estId && n.curso === curso);
+  if (idx >= 0) {
+    db.notas[idx] = registro;
+    msgEl.innerHTML = `<div class="msg msg-warn">Nota actualizada: promedio ${prom} — ${estado}</div>`;
+  } else {
+    db.notas.push(registro);
+    msgEl.innerHTML = `<div class="msg msg-ok">Nota guardada: promedio ${prom} — ${estado}</div>`;
+  }
+  renderNotas();
+}
+
+function renderNotas() {
+  const tbody = document.getElementById('notas-tbody');
+  if (!db.notas.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Sin notas registradas</td></tr>';
+    return;
+  }
+  tbody.innerHTML = db.notas.map(n =>
+    `<tr><td>${n.estNombre}</td><td>${n.curso}</td><td>${n.n1}</td><td>${n.n2}</td><td>${n.ef}</td><td>${n.prom}</td>
+     <td><span class="badge ${n.estado==='Aprobado'?'b-green':'b-red'}">${n.estado}</span></td></tr>`
+  ).join('');
+}
+
+function renderEst(filtro) {
+  const lista = filtro
+    ? db.estudiantes.filter(e => e.nombre.toLowerCase().includes(filtro) || e.cedula.includes(filtro))
+    : db.estudiantes;
+  const tbody = document.getElementById('est-tbody');
+  if (!lista.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Sin resultados</td></tr>';
+    return;
+  }
+  tbody.innerHTML = lista.map(e =>
+    `<tr>
+      <td>${e.id}</td><td>${e.nombre}</td><td>${e.cedula}</td><td>${e.carrera}</td>
+      <td>Ano ${e.anio}</td><td>${e.edad}</td>
+      <td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.email}</td>
+      <td>${e.tel}</td>
+      <td><button class="btn btn-red" style="padding:3px 8px;font-size:11px;" onclick="eliminar(${e.id})" aria-label="Eliminar"><i class="ti ti-trash" style="font-size:13px" aria-hidden="true"></i></button></td>
+    </tr>`
+  ).join('');
+}
+
+function buscar() {
+  const q = document.getElementById('s-buscar').value.trim().toLowerCase();
+  renderEst(q || null);
+}
+
+function eliminar(id) {
+  const idx = db.estudiantes.findIndex(e => e.id === id);
+  if (idx < 0) return;
+  const nombre = db.estudiantes[idx].nombre;
+  db.estudiantes.splice(idx, 1);
+  const antes = db.notas.length;
+  db.notas = db.notas.filter(n => n.estId !== id);
+  const eliminadas = antes - db.notas.length;
+  renderEst();
+  const detalle = eliminadas > 0 ? ` Se eliminaron tambien ${eliminadas} nota(s) asociada(s).` : '';
+  document.getElementById('est-msg').innerHTML =
+    `<div class="msg msg-warn">Estudiante "${nombre}" eliminado.${detalle}</div>`;
+}
+
+function generarReporte() {
+  const filtroCarrera = document.getElementById('rep-carrera').value;
+  const orden = document.getElementById('rep-orden').value;
+
+  let lista = db.estudiantes.map(e => {
+    const ns = db.notas.filter(n => n.estId === e.id);
+    let promedioReal = null;
+    let estadoFinal = '—';
+    if (ns.length > 0) {
+      const suma = ns.reduce((acc, n) => acc + n.prom, 0);
+      promedioReal = parseFloat((suma / ns.length).toFixed(1));
+      estadoFinal = promedioReal >= 70 ? 'Aprobado' : 'Reprobado';
+    }
+    return { ...e, promedioReal, estadoFinal };
+  });
+
+  if (filtroCarrera) lista = lista.filter(e => e.carrera === filtroCarrera);
+
+  lista.sort((a, b) => {
+    if (orden === 'nombre') return a.nombre.localeCompare(b.nombre);
+    if (orden === 'promedio') {
+      if (a.promedioReal === null && b.promedioReal === null) return 0;
+      if (a.promedioReal === null) return 1;
+      if (b.promedioReal === null) return -1;
+      return b.promedioReal - a.promedioReal;
+    }
+    if (orden === 'cedula') return (a.cedula||'').localeCompare(b.cedula||'');
+    return 0;
+  });
+
+  const todosProms = db.estudiantes.map(e => {
+    const ns = db.notas.filter(n => n.estId === e.id);
+    if (!ns.length) return null;
+    return ns.reduce((a,n) => a+n.prom,0) / ns.length;
+  }).filter(p => p !== null);
+
+  const aprobados = db.estudiantes.filter(e => {
+    const ns = db.notas.filter(n => n.estId === e.id);
+    if (!ns.length) return false;
+    return (ns.reduce((a,n) => a+n.prom,0)/ns.length) >= 70;
+  }).length;
+  const reprobados = db.estudiantes.filter(e => {
+    const ns = db.notas.filter(n => n.estId === e.id);
+    if (!ns.length) return false;
+    return (ns.reduce((a,n) => a+n.prom,0)/ns.length) < 70;
+  }).length;
+  const promGral = todosProms.length
+    ? (todosProms.reduce((a,b)=>a+b,0)/todosProms.length).toFixed(1) : '—';
+
+  document.getElementById('rep-total').textContent = db.estudiantes.length;
+  document.getElementById('rep-aprobados').textContent = aprobados;
+  document.getElementById('rep-reprobados').textContent = reprobados;
+  document.getElementById('rep-prom').textContent = promGral;
+
+  const tbody = document.getElementById('rep-tbody');
+  if (!lista.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--color-text-tertiary);padding:1rem;">Sin datos</td></tr>';
+    return;
+  }
+  tbody.innerHTML = lista.map(e =>
+    `<tr><td>${e.nombre}</td><td>${e.cedula}</td><td>${e.carrera}</td>
+     <td>${e.promedioReal !== null ? e.promedioReal : '—'}</td>
+     <td>${e.estadoFinal !== '—'
+       ? `<span class="badge ${e.estadoFinal==='Aprobado'?'b-green':'b-red'}">${e.estadoFinal}</span>`
+       : '<span style="color:var(--color-text-tertiary)">Sin notas</span>'}</td></tr>`
+  ).join('');
+}
+
+function exportarCSV() {
+  if (!db.estudiantes.length) return;
+  function esc(val) {
+    const s = val===null||val===undefined ? '' : String(val);
+    return (s.includes(',')||s.includes('"')||s.includes('\n')) ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }
+  const header = 'ID,Nombre,Cedula,Carrera,Ano,Email,Telefono\n';
+  const rows = db.estudiantes.map(e =>
+    [e.id,e.nombre,e.cedula,e.carrera,e.anio,e.email,e.tel].map(esc).join(',')
+  ).join('\n');
+  const blob = new Blob([header+rows],{type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'estudiantes_sga_v22.csv';
+  a.click();
+}
+</script>
